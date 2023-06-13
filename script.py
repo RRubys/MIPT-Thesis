@@ -16,7 +16,7 @@ def get_basis_of_algebra(H0, V, tol=1e-3):
     Obtains two np.arrays of shape n by n and the level of sensetivity (tolerance) for rank problem solution;
     Returns integer and list of np.arrays of shape n by n.
     """
-    basis_matrix = np.concatenate((1j*H0.reshape((-1, 1)), 1j*V.reshape((-1, 1))), axis=1)
+    basis_matrix = np.concatenate((1j*np.transpose(H0).reshape((-1, 1)), 1j*np.transpose(V).reshape((-1, 1))), axis=1)
     n = H0.shape[0]
     basis_array = []
     cur_elem_ind = 0
@@ -34,6 +34,7 @@ def get_basis_of_algebra(H0, V, tol=1e-3):
             break
     
     for elem_ind in range(basis_matrix.shape[1]):
-        basis_array.append(basis_matrix[:, elem_ind].reshape((n, n)))
+        basis_array.append(np.transpose(basis_matrix[:, elem_ind].reshape((n, n))))
     
     return len(basis_array), basis_array
+
